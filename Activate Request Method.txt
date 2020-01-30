@@ -1,0 +1,19 @@
+//Change a request to active
+[HttpPost]
+[ValidateAntiForgeryToken]
+[Authorize(Roles = "Admin")]
+public ActionResult RequestActive(string requestId) 
+{
+    Guid.TryParse(requestId, out var resultGuid); //changes requestId to a Guid
+    var request = db.CreateUserRequests.Find(resultGuid); //gets the request from the database
+    if (request != null) //checks if the request exists in the database
+    {
+		request.IsActive = true; 
+		db.SaveChanges();
+		return Json(new { result = "success", JsonRequestBehavior.AllowGet });
+    }
+    else //return error that request is not in database
+    {
+    return Json(new { result = "error", message = "This CreateUserRequest was not found in the database" });
+    }     
+}
