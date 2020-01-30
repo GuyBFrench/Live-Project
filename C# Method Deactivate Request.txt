@@ -1,0 +1,15 @@
+//Change old requests to inactive
+public void NotActive()
+{           
+    var createUserRequest = db.CreateUserRequests.Where(x => x.IsActive == true).ToList(); //Checks database for all active requests             
+    foreach (var request in createUserRequest)
+    {
+        DateTime requestTime = request.UserCurrentActivity;
+        var hours = (DateTime.Now - requestTime).TotalHours;
+        if (hours > 335) //All requests 14 days or older changed to not active
+        {
+            request.IsActive = false;
+            db.SaveChanges();
+        }
+    }            
+}

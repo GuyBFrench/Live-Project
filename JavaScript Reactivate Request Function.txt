@@ -1,0 +1,26 @@
+//REACTIVATE CREATE USER REQUEST
+function changeActive(requestId) {
+    var form = $('#updateForm_' + requestId);
+    if (confirm("Are you sure you would like to change this Request to active?")) {
+        $.ajax({
+            url: form.attr("action"),
+            type: form.attr("method"),
+            data: form.serialize(),
+            datatype: "application/json",
+            success: function (returnJson) {
+                if (returnJson.result == "success") {
+                    location.reload();
+                }
+                else if (returnJson.result == "error") {
+                    alert("Error: " + returnJson.message);
+                }
+            },
+            error: function () {
+                
+            }
+        });
+    }
+    else {
+        return false;
+    }
+}

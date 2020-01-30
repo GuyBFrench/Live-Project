@@ -1,0 +1,12 @@
+<td>
+     @Html.DisplayFor(modelItem => item.IsActive)
+</td>
+<td>
+    <!-- REACTIVATE REQUEST BUTTON -->
+    @using (Html.BeginForm("RequestActive", "CreateUserRequest", FormMethod.Post, new { id = $"updateForm_{item.UserCreationRequestId}" }))
+    {
+       <input type="hidden" name="requestId" value="@item.UserCreationRequestId" />
+       @Html.AntiForgeryToken()
+       <input class="btn btn-primary" onclick="changeActive('@item.UserCreationRequestId')" value="Activate Request" type="button">
+    }
+</td>
